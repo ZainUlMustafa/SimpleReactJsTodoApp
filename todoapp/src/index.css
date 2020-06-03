@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  background-color: #fafafa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* LOGO CLASS */
+.icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+}
+.icon-warehouse {
+  background-image: url("./logo.svg");
+  filter: invert(29%) sepia(12%) saturate(2946%) hue-rotate(267deg) brightness(85%) contrast(79%);
+}
+.icon-warehouse:hover,
+.icon-warehouse:focus {
+  filter: invert(23%) sepia(9%) saturate(5168%) hue-rotate(280deg) brightness(99%) contrast(91%);
+}
+
+/**
+ * Custom cross-browser styles for keyboard :focus overrides defaults.
+ */
+*:focus { 
+  outline: 0 !important;
+  box-shadow:
+    0 0 0 .2rem #fff,
+    0 0 0 .35rem #069 !important;
+}
+
+/**
+ * Remove focus styles for non-keyboard :focus.
+ */
+*:focus:not(.focus-visible) {
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.valign-center {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.icon-button {
+  font-size: medium;
+}
