@@ -1,9 +1,10 @@
 import React from 'react';
 import Navbar from './components/NavBar';
 
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, HashRouter } from "react-router-dom";
 import HomePage from './components/home/HomePage';
 import NewsPage from './components/news/NewsPage';
+import SketchPage from './components/sketchit/SketchPage';
 
 /* 
 ACKNOWLEDGEMENT: Followed The Net Ninja tutorial to do this 
@@ -36,13 +37,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <HashRouter basename="/">
         <div className="App">
           <Navbar />
           <Route exact path="/" component={HomePage} />
           <Route path="/news" component={NewsPage} />
+          <Route path="/sketchit" component={SketchPage} />
         </div>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 

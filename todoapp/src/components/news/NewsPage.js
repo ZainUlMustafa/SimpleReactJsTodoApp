@@ -38,7 +38,7 @@ class NewsPage extends Component {
             })
         ) : (
                 <div>
-                    <p className="text-center">No posts yet</p>
+                    <p className="text-center">No articles yet</p>
                 </div>
             );
 

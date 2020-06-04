@@ -1,0 +1,64 @@
+<!-- <?xml version="1.0" standalone="yes"?> -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="border: green solid;" width="500" height="500">
+    <!--horizontal, vertical-->
+
+    <path stroke="green" stroke-width=".2" d="M10 0 V100"/>
+    <path stroke="green" stroke-width=".2" d="M20 0 V100"/>
+    <path stroke="green" stroke-width=".2" d="M30 0 V100"/>
+    <path stroke="green" stroke-width=".2" d="M40 0 V100"/>
+    <path stroke="green" stroke-width=".2" d="M50 0 V100"/>
+    <path stroke="green" stroke-width=".2" d="M60 0 V100"/>
+    <path stroke="green" stroke-width=".2" d="M70 0 V100"/>
+    <path stroke="green" stroke-width=".2" d="M80 0 V100"/>
+    <path stroke="green" stroke-width=".2" d="M90 0 V100"/>
+
+    <path stroke="green" stroke-width=".2" d="M0 10 H100"/>
+    <path stroke="green" stroke-width=".2" d="M0 20 H100"/>
+    <path stroke="green" stroke-width=".2" d="M0 30 H100"/>
+    <path stroke="green" stroke-width=".2" d="M0 40 H100"/>
+    <path stroke="green" stroke-width=".2" d="M0 50 H100"/>
+    <path stroke="green" stroke-width=".2" d="M0 60 H100"/>
+    <path stroke="green" stroke-width=".2" d="M0 70 H100"/>
+    <path stroke="green" stroke-width=".2" d="M0 80 H100"/>
+    <path stroke="green" stroke-width=".2" d="M0 90 H100"/>
+
+    <!-- STAIRS -->
+    <!-- <path stroke="red" stroke-width=".6" fill="none" d=
+    "M0 0 L10 0 L10 10 L20 10 L20 20 L30 20 30 30 L40 30 L40 40 L50 40 L50 50 L60 50 L60 60 L70 60 L70 70 L80 70 L80 80 L90 80 L90 90 L100 90" />
+
+    <path stroke="red" stroke-width=".6" fill="none" d=
+    "M0 10 L10 10 L10 20 L20 20 L20 30 L30 30 L30 40 L40 40 L40 50 L50 50 L50 60 L60 60 L60 70 L70 70 L70 80 L80 80 L80 90 L90 90 L90 100 L100 100" /> -->
+
+    <!-- ROTATED RECT -->
+    <circle cx="60" cy="50" r="14" stroke="green" stroke-width=".4" fill="none"/>
+    <circle cx="60" cy="50" r="14" style="stroke: none; fill:yellow; clip-path: url(#clipPath3);"/>
+
+    <rect x="50" y="20" width="17" height="31" stroke="red" stroke-width=".4" fill="none"/>
+    <rect x="50" y="20" width="17" height="31" style="stroke: none; fill:yellow; clip-path: url(#clipPath3);"/>
+
+
+    <path stroke="blue" stroke-width=".6" fill="none" d=
+    "M10 40 l10 10 l10 -10 l-10 -10 l-10 10" />
+
+
+    <path stroke="black" stroke-width=".6" fill="none" d=
+    "M13 47 l14 0 l0 -14 l-14 0 l0 14" />
+
+
+    <path stroke="black" stroke-width=".6" fill="none" d=
+    "M50 50 l20 0 l0 -20 l-20 0 l0 20" />
+
+    <path stroke="blue" stroke-width=".6" fill="none" d=
+    "M46 40 l14 14 l14 -14 l-14 -14 l-14 14" />
+
+    <defs>
+        <clipPath id="clipPath3">
+            <path stroke="blue" stroke-width=".6" fill="none" d=
+    "M46 40 l14 14 l14 -14 l-14 -14 l-14 14" />
+        </clipPath>
+    </defs>
+
+
+    <!-- <path stroke="purple" stroke-width=".6" fill="none" d=
+    "M48 33 l6 20" /> -->
+</svg>
