@@ -436,7 +436,7 @@
             fill: rgba(0,0,255,0.6);
         }
     </style>
-    <g>
+    <!-- <g>
         <g class="customShape" id="0">
             <circle cx="260" cy="550" r="14"/>
         </g>
@@ -452,5 +452,5 @@
         <g class="customShape" id="0">
             <rect x="530.767" y="461.591" width="100" height="100"/>
         </g>
-    </g>
+    </g> -->
 </svg>
