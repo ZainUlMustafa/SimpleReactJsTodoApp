@@ -43,6 +43,8 @@ const Todos = ({ todos, handleUpdateTodo, handleDeletion }) => {
             </div>
         );
 
+    console.log(todoList);
+
     return (
         <div className="container pr-sm-4 pl-sm-4 pr-md-3 pl-md-3">
             {todoList}
