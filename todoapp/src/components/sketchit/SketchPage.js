@@ -177,7 +177,7 @@ class SketchPage extends Component {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <UpdateShape handleUpdateShape={this.handleUpdateShape} selectedShapeMap={this.state.selectedShapeMap}/>
+                                <UpdateShape handleUpdateShape={this.handleUpdateShape} selectedShapeMap={this.state.selectedShapeMap} key={this.state.selectedShapeMap.id}/>
                             </div>
                         </div>
                     </div>

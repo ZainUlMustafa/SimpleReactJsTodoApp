@@ -1,3 +1,5 @@
+// DOC => https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
+
 import React, { Component } from 'react'
 
 class UpdateShape extends Component {
@@ -9,29 +11,33 @@ class UpdateShape extends Component {
             shapeId: this.props.selectedShapeMap.id,
             shapeDimension: this.props.selectedShapeMap.shapeDimension,
             shapeInd: this.props.selectedShapeMap.shapeInd,
-            shapeIndColor: "orange",
+            shapeIndColor: this.props.selectedShapeMap.shapeInd === 0 ?
+                "orange" :
+                this.props.selectedShapeMap.shapeInd === 1 ?
+                    "teal" :
+                    "red",
         }
     }
 
-    static getDerivedStateFromProps(newProps, currentState) {
-        console.log("Get update derived state", currentState)
+    // static getDerivedStateFromProps(newProps, currentState) {
+    //     console.log("Get update derived state", currentState)
 
-        const shapeId = newProps.selectedShapeMap.id;
-        const shapeDimension = newProps.selectedShapeMap.shapeDimension;
-        const shapeInd = newProps.selectedShapeMap.shapeInd;
-        const shapeIndColor = shapeInd === 0 ? "orange" : shapeInd === 1 ? "teal" : "red";
-        
-        if (shapeId !== currentState.shapeId) {
-            return {
-                shapeId: shapeId,
-                shapeDimension: shapeDimension,
-                shapeInd: shapeInd,
-                shapeIndColor: shapeIndColor
-            };
-        } else {
-            return null;
-        }
-    }
+    //     const shapeId = newProps.selectedShapeMap.id;
+    //     const shapeDimension = newProps.selectedShapeMap.shapeDimension;
+    //     const shapeInd = newProps.selectedShapeMap.shapeInd;
+    //     const shapeIndColor = shapeInd === 0 ? "orange" : shapeInd === 1 ? "teal" : "red";
+
+    //     if (shapeId !== currentState.shapeId) {
+    //         return {
+    //             shapeId: shapeId,
+    //             shapeDimension: shapeDimension,
+    //             shapeInd: shapeInd,
+    //             shapeIndColor: shapeIndColor
+    //         };
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
     handleDimensionChange = (e) => {
         this.setState({
@@ -52,8 +58,8 @@ class UpdateShape extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        var sda = this.state.shapeDimension.split(',');
-        this.props.handleUpdateShape(this.props.selectedShapeMap.id, sda, this.state.shapeInd);
+        let sda = this.state.shapeDimension.toString().split(',');
+        this.props.handleUpdateShape(this.state.shapeId, sda, this.state.shapeInd);
     }
 
 
