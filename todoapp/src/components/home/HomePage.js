@@ -51,6 +51,7 @@ class HomePage extends React.Component {
     }
 
     render() {
+        console.log("home render")
         return (
             <div>
                 <div className="container-fluid p-3">

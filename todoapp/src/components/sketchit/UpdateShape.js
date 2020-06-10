@@ -6,9 +6,30 @@ class UpdateShape extends Component {
         super(props)
 
         this.state = {
-            shapeDimension: "20,20,200,200",
-            shapeInd: 0,
-            shapeIndColor: "orange"
+            shapeId: this.props.selectedShapeMap.id,
+            shapeDimension: this.props.selectedShapeMap.shapeDimension,
+            shapeInd: this.props.selectedShapeMap.shapeInd,
+            shapeIndColor: "orange",
+        }
+    }
+
+    static getDerivedStateFromProps(newProps, currentState) {
+        console.log("Get update derived state", currentState)
+
+        const shapeId = newProps.selectedShapeMap.id;
+        const shapeDimension = newProps.selectedShapeMap.shapeDimension;
+        const shapeInd = newProps.selectedShapeMap.shapeInd;
+        const shapeIndColor = shapeInd === 0 ? "orange" : shapeInd === 1 ? "teal" : "red";
+        
+        if (shapeId !== currentState.shapeId) {
+            return {
+                shapeId: shapeId,
+                shapeDimension: shapeDimension,
+                shapeInd: shapeInd,
+                shapeIndColor: shapeIndColor
+            };
+        } else {
+            return null;
         }
     }
 
@@ -26,7 +47,7 @@ class UpdateShape extends Component {
             shapeInd: id,
             shapeIndColor: color,
         });
-        // console.log(id);
+        console.log(this.state.shapeInd);
     }
 
     handleSubmit = (e) => {
@@ -37,6 +58,7 @@ class UpdateShape extends Component {
 
 
     render() {
+        console.log("Rendering update")
         const shapeInd = (
             <svg width={10} height={10}>
                 <circle cx={5} cy={5} r={5} fill={this.state.shapeIndColor} />

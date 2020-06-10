@@ -13,19 +13,35 @@ class SketchPage extends Component {
             customShapesMap: [
                 {
                     id: 0,
-                    shape: <circle cx='120' cy='500' r='20' className='customShape' onClick={() => { this.handleShapeOnClick(0) }} key={0}/>
+                    shape: <circle cx='120' cy='500' r='20' className='customShape' onClick={() => { this.handleShapeOnClick(0) }} key={0} />,
+                    shapeInd: 1,
+                    shapeDimension: [120, 500, 20]         ///cx,cy,r
                 },
                 {
                     id: 1,
-                    shape: <circle cx='600' cy='200' r='50' className='customShape' onClick={() => { this.handleShapeOnClick(1) }} key={1}/>
+                    shape: <circle cx='600' cy='200' r='50' className='customShape' onClick={() => { this.handleShapeOnClick(1) }} key={1} />,
+                    shapeInd: 1,
+                    shapeDimension: [600, 200, 50]
                 },
                 {
                     id: 2,
-                    shape: <rect x='0' y='0' width='100' height='200' className='customShape' onClick={() => { this.handleShapeOnClick(2) }} key={2}/>
+                    shape: <rect x='0' y='0' width='100' height='200' className='customShape' onClick={() => { this.handleShapeOnClick(2) }} key={2} />,
+                    shapeInd: 0,
+                    shapeDimension: [0, 0, 100, 200]         ///x,y,w,h
+                },
+                {
+                    id: 3,
+                    shape: <g className='customShape' onClick={() => { this.handleShapeOnClick(3) }} key={3}>
+                        <path d="M150 40 L75 200 L225 200 Z"/>
+                        <rect x='300' y='300' width='100' height='200'/>
+                        </g>,
+                    shapeInd: 3,
+                    shapeDimension: []
                 },
             ],
 
-            selectedShapeMap: {id: null, shape: null},
+
+            selectedShapeMap: { id: null, shape: null, shapeInd: 0, shapeDimension: ""},
 
             imgWidth: null,
             imgHeight: null,
@@ -44,7 +60,7 @@ class SketchPage extends Component {
 
         console.log(filterShapesMap[0])
         this.setState({
-            selectedShapeMap: filterShapesMap[0]
+            selectedShapeMap: filterShapesMap[0],
         })
 
         $("#updateShapeModal").modal("show");
@@ -58,7 +74,7 @@ class SketchPage extends Component {
 
         /// create new map
         const svgShape = ind === 0 ? svgRectShape : ind === 1 ? svgCircleShape : svgSquareShape
-        const customShapeMap = {id: id, shape: svgShape}
+        const customShapeMap = { id: id, shape: svgShape, shapeInd: ind, shapeDimension: sda }
 
         /// deleting old map
         const customShapesMap = this.state.customShapesMap.filter(customShapeMap => {
@@ -77,8 +93,8 @@ class SketchPage extends Component {
     /// README: ADD NEW SHAPE
     handleAddShape = (sda, ind) => {
         /// generate shape id
-        const id = Math.random();
-        
+        const id = Math.ceil(Math.random()*100000);
+
         /// generate shape
         const svgSquareShape = <rect x={sda[0]} y={sda[1]} width={sda[2]} height={sda[2]} className="customShape" onClick={() => { this.handleShapeOnClick(id) }} key={id} />;
         const svgCircleShape = <circle cx={sda[0]} cy={sda[1]} r={sda[2]} className="customShape" onClick={() => { this.handleShapeOnClick(id) }} key={id} />;
@@ -86,7 +102,7 @@ class SketchPage extends Component {
 
         /// create new map
         const svgShape = ind === 0 ? svgRectShape : ind === 1 ? svgCircleShape : svgSquareShape
-        const customShapeMap = {id: id, shape: svgShape}
+        const customShapeMap = { id: id, shape: svgShape, shapeInd: ind, shapeDimension: sda }
 
         /// add map in list of maps
         let customShapesMap = [...this.state.customShapesMap, customShapeMap];
@@ -109,6 +125,8 @@ class SketchPage extends Component {
     }
 
     render() {
+        console.log("sketch page render")
+
         return (
             <div className="my-2 mx-5">
                 <div className="text-center">
@@ -126,7 +144,7 @@ class SketchPage extends Component {
                             width={this.state.svgWidth}
                             height={this.state.svgHeight}
                         >
-                            <Shapes customShapesMap={this.state.customShapesMap} handleUpdateShapes={this.handleUpdateShapes}/>
+                            <Shapes customShapesMap={this.state.customShapesMap} handleUpdateShapes={this.handleUpdateShapes} />
                         </svg>
                     </div>
                 </div>
