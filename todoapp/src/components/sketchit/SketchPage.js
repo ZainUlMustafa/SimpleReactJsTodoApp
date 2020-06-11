@@ -14,19 +14,19 @@ class SketchPage extends Component {
             customShapesMap: [
                 {
                     id: "0",
-                    shape: <circle cx='120' cy='500' r='20' className='customShape' onClick={() => { this.handleShapeOnClick(0) }} key={0} />,
+                    shape: <circle cx='120' cy='500' r='20' className='customShape' onClick={() => { this.handleShapeOnClick("0") }} key={0} />,
                     shapeInd: 1,
                     shapeDimension: [120, 500, 20]         ///cx,cy,r
                 },
                 {
                     id: "1",
-                    shape: <circle cx='600' cy='200' r='50' className='customShape' onClick={() => { this.handleShapeOnClick(1) }} key={1} />,
+                    shape: <circle cx='600' cy='200' r='50' className='customShape' onClick={() => { this.handleShapeOnClick("1") }} key={1} />,
                     shapeInd: 1,
                     shapeDimension: [600, 200, 50]
                 },
                 {
                     id: "2",
-                    shape: <rect x='0' y='0' width='100' height='200' className='customShape' onClick={() => { this.handleShapeOnClick(2) }} key={2} />,
+                    shape: <rect x='0' y='0' width='100' height='200' className='customShape' onClick={() => { this.handleShapeOnClick("2") }} key={2} />,
                     shapeInd: 0,
                     shapeDimension: [0, 0, 100, 200]         ///x,y,w,h
                 },
@@ -63,6 +63,8 @@ class SketchPage extends Component {
         this.setState({
             selectedShapeMap: filterShapesMap[0],
         })
+
+        console.log(this.state.selectedShapeMap)
 
         $("#updateShapeModal").modal("show");
     }
