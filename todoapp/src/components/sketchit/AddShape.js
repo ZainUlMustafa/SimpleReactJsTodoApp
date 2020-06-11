@@ -36,7 +36,6 @@ class AddShape extends Component {
 
 
     render() {
-        console.log("add shape render")
         const shapeInd = (
             <svg width={10} height={10}>
                 <circle cx={5} cy={5} r={5} fill={this.state.shapeIndColor} />

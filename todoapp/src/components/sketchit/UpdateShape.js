@@ -53,7 +53,7 @@ class UpdateShape extends Component {
             shapeInd: id,
             shapeIndColor: color,
         });
-        console.log(this.state.shapeInd);
+        // console.log(this.state.shapeInd);
     }
 
     handleSubmit = (e) => {
@@ -64,7 +64,6 @@ class UpdateShape extends Component {
 
 
     render() {
-        console.log("Rendering update")
         const shapeInd = (
             <svg width={10} height={10}>
                 <circle cx={5} cy={5} r={5} fill={this.state.shapeIndColor} />
