@@ -24,7 +24,7 @@ class MergeShapes extends Component {
     }
 
     render() {
-        const colorList = ["orange", "teal", "red", "green"]
+        const colorList = ["orange", "teal", "red", "black"]
         const shapeNameList = ["Rectangle", "Circle", "Square", "Group"]
 
         const shapeList = this.props.customShapesMap.length ? (

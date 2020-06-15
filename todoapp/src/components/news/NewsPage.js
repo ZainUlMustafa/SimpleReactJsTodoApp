@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from "react-router-dom";
 import Axios from 'axios'
 
 class NewsPage extends Component {
@@ -11,11 +12,11 @@ class NewsPage extends Component {
     }
 
     componentDidMount() {
-        Axios.get("http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=ac0779dc162a4e49b08927fbf328147d")
+        Axios.get("https://jsonplaceholder.typicode.com/posts")
             .then(res => {
                 console.log(res);
                 this.setState({
-                    posts: res.data.articles
+                    posts: res.data
                 })
             })
     }
@@ -25,13 +26,13 @@ class NewsPage extends Component {
         const postList = posts.length ? (
             posts.map(post => {
                 return (
-                    <div className="container">
-                        <div className="card mx-5 my-2 p-3" key={post.id ?? Math.random()}>
-                            <h5>{post.title}</h5>
-                            <p>{post.description}</p>
-                            <div className="text-center">
-                                <img src={post.urlToImage} alt={post.title} width="50%" />
-                            </div>
+                    <div className="container" key={post.id}>
+                        <div className="card mx-5 my-2 p-3">
+                            <Link to={'/news/' + post.id}><h5>{post.title}</h5></Link>
+                            <p>{post.body}</p>
+                            {/* <div className="text-center">
+                                <img src={post.thumbnailUrl} alt={post.title} width="50%" />
+                            </div> */}
                         </div>
                     </div>
                 );

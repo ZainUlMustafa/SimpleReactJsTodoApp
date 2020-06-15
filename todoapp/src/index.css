@@ -106,3 +106,14 @@ Sketch it stuff
   opacity: 0.7;
   /* background-color: chocolate; */
 }
+
+.grid-rect{
+  stroke: darkslateblue;
+  opacity: 0.5;
+  stroke-width: 1;
+  fill: transparent;
+}
+
+.shapes-svg {
+  fill: url(#transformedPattern);
+}

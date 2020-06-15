@@ -4,7 +4,9 @@ import Navbar from './components/NavBar';
 import { BrowserRouter, Route, HashRouter } from "react-router-dom";
 import HomePage from './components/home/HomePage';
 import NewsPage from './components/news/NewsPage';
+import NewsPost from './components/news/NewsPost';
 import SketchPage from './components/sketchit/SketchPage';
+import CroppedShape from './components/sketchit/CroppedShape'
 
 /* 
 ACKNOWLEDGEMENT: Followed The Net Ninja tutorial to do this 
@@ -37,14 +39,16 @@ class App extends React.Component {
 
   render() {
     return (
-      <HashRouter basename="/">
+      <BrowserRouter>
         <div className="App">
           <Navbar />
           <Route exact path="/" component={HomePage} />
-          <Route path="/news" component={NewsPage} />
-          <Route path="/sketchit" component={SketchPage} />
+          <Route exact path="/news" component={NewsPage} />
+          <Route exact path="/sketchit" component={SketchPage} />
+          <Route path="/news/:news_id" component={NewsPost}/>
+          <Route path="/sketchit/:shape_id" component={CroppedShape}/>
         </div>
-      </HashRouter>
+      </BrowserRouter>
     );
   }
 
