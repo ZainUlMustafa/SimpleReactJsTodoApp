@@ -7,6 +7,7 @@ import UpdateShape from './UpdateShape';
 import MergeShapes from './MergeShapes';
 import AllShapesList from './AllShapesList';
 import UnmergeShapes from './UnmergeShapes';
+import GridSettings from './GridSettings';
 
 class SketchPage extends Component {
     constructor(props) {
@@ -99,7 +100,9 @@ class SketchPage extends Component {
             svgHeight: null,
 
             zoomFactor: 1,
+
             gridToggle: true,
+            gridSize: 5,
         }
     }
 
@@ -314,6 +317,12 @@ class SketchPage extends Component {
         console.log(img.width)
     }
 
+    handleGridSizeChange = (size) => {
+        this.setState({
+            gridSize: size,
+        })
+    }
+
     toggleGrid = () => {
         this.setState({
             gridToggle: !this.state.gridToggle
@@ -325,8 +334,8 @@ class SketchPage extends Component {
         const grid = this.state.gridToggle ? (
             <>
                 <defs>
-                    <pattern id="transformedPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
-                        <rect x="0" y="0" width="50" height="50" className="grid-rect" />
+                    <pattern id="transformedPattern" x="0" y="0" width={this.state.gridSize} height={this.state.gridSize} patternUnits="userSpaceOnUse">
+                        <rect x="0" y="0" width={this.state.gridSize} height={this.state.gridSize} className="grid-rect" />
                     </pattern>
                 </defs>
                 <rect x="0" y="0" width="100%" height="100%" className="shapes-svg" />
@@ -348,7 +357,14 @@ class SketchPage extends Component {
                 <div className="row">
                     <div className="col-sm-2">
                         <AllShapesList customShapesMap={this.state.customShapesMap} handleDeleteShape={this.handleDeleteShape} />
-                        <button type="button" className="btn btn-link btn-sm" onClick={() => { this.toggleGrid() }}>Grid toggle (50x50)</button>
+                        <div className="d-flex justify-content-between">
+                            <div className="border-0 w-95">
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => { this.toggleGrid() }}>Grid toggle ({this.state.gridSize}x{this.state.gridSize})</button>
+                            </div>
+                            <button className="btn btn-sm" data-toggle="modal" data-target="#gridSettingsModal">
+                                <i className="material-icons material-icons">settings</i>
+                            </button>
+                        </div>
                     </div>
                     <div className="col-sm-10">
                         {/* CANVAS */}
@@ -436,6 +452,23 @@ class SketchPage extends Component {
                             </div>
                             <div className="modal-body">
                                 <UnmergeShapes handleUnmergeShape={this.handleUnmergeShape} customShapesMap={this.state.customShapesMap} simpleCustomShapesMap={this.state.simpleCustomShapesMap} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* GRID SETTINGS MODAL */}
+                <div className="modal fade" id="gridSettingsModal" tabIndex="-1" role="dialog" aria-labelledby="gridSettingsModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="gridSettingsModalLabel">Grid settings</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <GridSettings handleGridSizeChange={this.handleGridSizeChange} grideSize={this.state.gridSize}/>
                             </div>
                         </div>
                     </div>
