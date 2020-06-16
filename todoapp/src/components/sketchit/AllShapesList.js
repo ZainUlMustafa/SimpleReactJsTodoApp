@@ -28,10 +28,10 @@ class AllShapesList extends Component {
                 )
 
                 return (
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between" key={eachShape.id}>
                         <div className="border-0 w-95">
                             <Link to={'/sketchit/' + eachShape.id}>
-                                <p key={eachShape.id}>
+                                <p>
                                     {shapeInd} {shapeNameList[eachShape.shapeInd]}: {eachShape.id}
                                 </p>
                             </Link>
