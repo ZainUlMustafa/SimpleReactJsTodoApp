@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 
-class CroppedShapeModal extends Component {
+class AllShapesList extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             customShapesMap: this.props.customShapesMap,
         }
+    }
+
+    handleSubmit = (e, shapeId) => {
+        e.preventDefault()
+        this.props.handleDeleteShape(shapeId);
     }
 
     render() {
@@ -23,24 +28,33 @@ class CroppedShapeModal extends Component {
                 )
 
                 return (
-                    <Link to={'/sketchit/' + eachShape.id}><p key={eachShape.id}>
-                        {shapeInd} {shapeNameList[eachShape.shapeInd]}: {eachShape.id}
-                    </p></Link>
+                    <div className="d-flex justify-content-between">
+                        <div className="border-0 w-95">
+                            <Link to={'/sketchit/' + eachShape.id}>
+                                <p key={eachShape.id}>
+                                    {shapeInd} {shapeNameList[eachShape.shapeInd]}: {eachShape.id}
+                                </p>
+                            </Link>
+                        </div>
+                        <button className="btn btn-sm" onClick={(e) => {this.handleSubmit(e, eachShape.id)}}>
+                            <i className="material-icons material-icons-outlined">close</i>
+                        </button>
+                    </div>
                 );
             })
         ) : (
-                <></>
+                <p>No shapes added!</p>
             )
 
         return (
             <div className="container">
                 <b>Shape type: id</b>
                 <hr></hr>
-                    {shapeList}
+                {shapeList}
                 <hr></hr>
             </div>
         )
     }
 }
 
-export default CroppedShapeModal;
+export default AllShapesList;

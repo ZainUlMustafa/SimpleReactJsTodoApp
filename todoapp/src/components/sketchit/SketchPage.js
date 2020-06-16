@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Floor from "./assets/wl1.svg";
+import Floor from "./assets/floor.svg";
 import AddShape from './AddShape';
 import $ from "jquery";
 import Shapes from './Shapes';
 import UpdateShape from './UpdateShape';
 import MergeShapes from './MergeShapes';
-import CroppedShapeModal from './CroppedShapeModal';
+import AllShapesList from './AllShapesList';
 
 class SketchPage extends Component {
     constructor(props) {
@@ -94,25 +94,54 @@ class SketchPage extends Component {
         $("#updateShapeModal").modal("show");
     }
 
+    handleDeleteShape = (id) => {
+        /// deleting old map
+        const customShapesMap = this.state.customShapesMap.filter(customShapeMap => {
+            return customShapeMap.id !== id
+        });
+
+        const simpleShapesMap = this.state.simpleCustomShapesMap.filter(simpleShapeMap => {
+            return simpleShapeMap.id !== id
+        });
+
+        this.setState({
+            customShapesMap: customShapesMap,
+            simpleCustomShapesMap: simpleShapesMap
+        });
+    }
+
     handleUpdateShape = (id, sda, ind) => {
         /// generate shape
         const svgSquareShape = <rect x={sda[0]} y={sda[1]} width={sda[2]} height={sda[2]} className="customShape" onClick={() => { this.handleShapeOnClick(id) }} key={id} />;
         const svgCircleShape = <circle cx={sda[0]} cy={sda[1]} r={sda[2]} className="customShape" onClick={() => { this.handleShapeOnClick(id) }} key={id} />;
         const svgRectShape = <rect x={sda[0]} y={sda[1]} width={sda[2]} height={sda[3]} className="customShape" onClick={() => { this.handleShapeOnClick(id) }} key={id} />;
 
+        const svgSimpleSquareShape = <rect x={sda[0]} y={sda[1]} width={sda[2]} height={sda[2]}/>;
+        const svgSimpleCircleShape = <circle cx={sda[0]} cy={sda[1]} r={sda[2]}/>;
+        const svgSimpleRectShape = <rect x={sda[0]} y={sda[1]} width={sda[2]} height={sda[3]}/>;
+
         /// create new map
         const svgShape = ind === 0 ? svgRectShape : ind === 1 ? svgCircleShape : svgSquareShape
+        const svgSimpleShape = ind === 0 ? svgSimpleRectShape : ind === 1 ? svgSimpleCircleShape : svgSimpleSquareShape
+
         const customShapeMap = { id: id, shape: svgShape, shapeInd: ind, shapeDimension: sda }
+        const simpleShapeMap = { id: id, shape: svgSimpleShape}
 
         /// deleting old map
         const customShapesMap = this.state.customShapesMap.filter(customShapeMap => {
             return customShapeMap.id !== id
         });
 
+        const simpleShapesMap = this.state.simpleCustomShapesMap.filter(simpleShapeMap => {
+            return simpleShapeMap.id !== id
+        });
+
         /// add map in list of maps
         let newCustomShapesMap = [...customShapesMap, customShapeMap];
+        let newSimpleShapesMap = [...simpleShapesMap, simpleShapeMap];
         this.setState({
             customShapesMap: newCustomShapesMap,
+            simpleCustomShapesMap: newSimpleShapesMap
         });
 
         $("#updateShapeModal").modal("hide");
@@ -128,14 +157,23 @@ class SketchPage extends Component {
         const svgCircleShape = <circle cx={sda[0]} cy={sda[1]} r={sda[2]} className="customShape" onClick={() => { this.handleShapeOnClick(id) }} key={id} />;
         const svgRectShape = <rect x={sda[0]} y={sda[1]} width={sda[2]} height={sda[3]} className="customShape" onClick={() => { this.handleShapeOnClick(id) }} key={id} />;
 
+        const svgSimpleSquareShape = <rect x={sda[0]} y={sda[1]} width={sda[2]} height={sda[2]}/>;
+        const svgSimpleCircleShape = <circle cx={sda[0]} cy={sda[1]} r={sda[2]}/>;
+        const svgSimpleRectShape = <rect x={sda[0]} y={sda[1]} width={sda[2]} height={sda[3]}/>;
+
         /// create new map
         const svgShape = ind === 0 ? svgRectShape : ind === 1 ? svgCircleShape : svgSquareShape
+        const svgSimpleShape = ind === 0 ? svgSimpleRectShape : ind === 1 ? svgSimpleCircleShape : svgSimpleSquareShape
+
         const customShapeMap = { id: id, shape: svgShape, shapeInd: ind, shapeDimension: sda }
+        const simpleShapeMap = { id: id, shape: svgSimpleShape}
 
         /// add map in list of maps
         let customShapesMap = [...this.state.customShapesMap, customShapeMap];
+        let simpleShapesMap = [...this.state.simpleCustomShapesMap, simpleShapeMap];
         this.setState({
             customShapesMap: customShapesMap,
+            simpleCustomShapesMap: simpleShapesMap,
         });
 
         $("#addShapeModal").modal("hide");
@@ -154,8 +192,8 @@ class SketchPage extends Component {
         let idExists = this.elementsExists(listOfMergeShapeIds, listOfAllShapeIds)
         if (idExists) {
             /// merge (concat) all ids together with delimiter (",") for later on separation
-            let idConcat = listOfMergeShapeIds;
-            idConcat = Math.ceil(Math.random() * 100000).toString();
+            let idConcat = listOfMergeShapeIds.join("o");
+            // idConcat = Math.ceil(Math.random() * 100000).toString();
 
             /// get respective shapes
             const filterShapesMap = this.state.simpleCustomShapesMap.filter(function (eachShape) {
@@ -229,21 +267,23 @@ class SketchPage extends Component {
                 <rect x="0" y="0" width="100%" height="100%" className="shapes-svg" />
             </>
         ) : (
-            <></>
-        )
+                <></>
+            )
 
         return (
             <div className="my-2 mx-2">
                 <div className="text-center">
                     <button type="button" className="btn btn-dark btn-sm" data-toggle="modal" data-target="#addShapeModal">+ Add a shape</button>
                     {" "}
-                    <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#mergeShapeModal">Merge shapes</button>
+                    <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#mergeShapeModal">Merge</button>
+                    {" "}
+                    <button type="button" className="btn btn-danger btn-sm" data-toggle="modal" data-target="#unmergeShapeModal">Unmerge</button>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-2">
-                        <CroppedShapeModal customShapesMap={this.state.customShapesMap} />
-                        <button type="button" className="btn btn-link btn-sm" onClick={() => {this.toggleGrid()}}>Grid toggle</button>
+                        <AllShapesList customShapesMap={this.state.customShapesMap} handleDeleteShape={this.handleDeleteShape}/>
+                        <button type="button" className="btn btn-link btn-sm" onClick={() => { this.toggleGrid() }}>Grid toggle</button>
                     </div>
                     <div class="col-sm-10">
                         {/* CANVAS */}
