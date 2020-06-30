@@ -1,34 +1,27 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
-import Axios from 'axios'
+import { connect } from 'react-redux';
 
 class NewsPost extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            post: null
         }
     }
 
-    componentDidMount() {
-        console.log(this.props);
-        let id = this.props.match.params.news_id;
-        Axios.get("https://jsonplaceholder.typicode.com/posts/" + id)
-            .then(res => {
-                console.log(res);
-                this.setState({
-                    post: res.data
-                })
-            })
+    handleDelete = () => {
+        this.props.deleteNews(this.props.news.id)
+        this.props.history.push('/news')
     }
 
     render() {
-        const postToDisplay = this.state.post ? (
+        const newsToDisplay = this.props.news ? (
             <div className="container">
-                <h3>{this.state.post.title}</h3>
+                <h3>{this.props.news.title}</h3>
                 <hr></hr>
-                <p>{this.state.post.body}</p>
+                <p>{this.props.news.body}</p>
+                <button className="btn btn-light btn-sm" onClick={this.handleDelete}>Delete</button>
             </div>
         ) : (
                 <></>
@@ -45,11 +38,25 @@ class NewsPost extends Component {
                             </div>
                         </div>
                     </Link>
-                    {postToDisplay}
+                    {newsToDisplay}
                 </div>
             </div>
         )
     }
 }
 
-export default NewsPost;
+const mapStateToProps = (state, ownProps) => {
+    let id = parseInt(ownProps.match.params.news_id);
+    console.log(ownProps);
+    return {
+        news: state.allNews.find(news => news.id === id)
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteNews: (id) => { dispatch({ type: 'DELETE_NEWS', id: id }) }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewsPost);

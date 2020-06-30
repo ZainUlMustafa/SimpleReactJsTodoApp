@@ -1,35 +1,47 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
-import Axios from 'axios'
+import Axios from 'axios';
+import { connect } from 'react-redux';
 
 class NewsPage extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            posts: [],
         }
     }
 
+    // shouldComponentUpdate() {
+    //     console.log("comp should update")
+    //     console.log(this.props.updateFlag)
+    //     return this.props.updateFlag;
+    // }
+
     componentDidMount() {
-        Axios.get("https://jsonplaceholder.typicode.com/posts")
-            .then(res => {
-                console.log(res);
-                this.setState({
-                    posts: res.data
+        console.log("comp did");
+        if (this.props.updateFlag) {
+            Axios.get("https://jsonplaceholder.typicode.com/posts")
+                .then(res => {
+                    console.log(res);
+                    this.props.updateAllNews(res.data, false)
                 })
-            })
+        }
+    }
+
+    handleRefresh = (e) => {
+        this.props.forceUpdate(true)
     }
 
     render() {
-        const { posts } = this.state;
-        const postList = posts.length ? (
-            posts.map(post => {
+        console.log("render")
+        const { allNews } = this.props;
+        const allNewsList = allNews.length ? (
+            allNews.map(news => {
                 return (
-                    <div className="container" key={post.id}>
+                    <div className="container" key={news.id}>
                         <div className="card mx-5 my-2 p-3">
-                            <Link to={'/news/' + post.id}><h5>{post.title}</h5></Link>
-                            <p>{post.body}</p>
+                            <Link to={'/news/' + news.id}><h5>{news.title}</h5></Link>
+                            <p>{news.body}</p>
                             {/* <div className="text-center">
                                 <img src={post.thumbnailUrl} alt={post.title} width="50%" />
                             </div> */}
@@ -42,6 +54,7 @@ class NewsPage extends Component {
                     <p className="text-center">No articles yet</p>
                 </div>
             );
+            
 
         return (
             <div className="my-2">
@@ -50,11 +63,38 @@ class NewsPage extends Component {
                         <h3>Latest news</h3>
                         <i className="material-icons material-icons-outlined ml-2">public</i>
                     </div>
+                    <button onClick={this.handleRefresh}>Refresh</button>
                 </div>
-                {postList}
+                {allNewsList}
             </div>
         )
     }
 }
 
-export default NewsPage;
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        allNews: state.allNews,
+        updateFlag: state.updateFlag,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateAllNews: (allNewsData, updateFlag) => {
+            dispatch({
+                type: 'UPDATE_ALL_NEWS',
+                allNewsData: allNewsData,
+                updateFlag: updateFlag,
+            })
+        },
+        forceUpdate: (updateFlag) => {
+            dispatch({
+                type: 'FORCE_UPDATE',
+                updateFlag: updateFlag,
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewsPage);

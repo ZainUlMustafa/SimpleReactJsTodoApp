@@ -8,6 +8,7 @@ import MergeShapes from './MergeShapes';
 import AllShapesList from './AllShapesList';
 import UnmergeShapes from './UnmergeShapes';
 import GridSettings from './GridSettings';
+import {connect} from 'react-redux';
 
 class SketchPage extends Component {
     constructor(props) {
@@ -219,7 +220,7 @@ class SketchPage extends Component {
         /// check if ids to be merged exists or not in main list of shapes
         let idExists = this.elementsExists(listOfMergeShapeIds, listOfAllShapeIds)
         if (idExists) {
-            /// merge (concat) all ids together with delimiter (",") for later on separation
+            /// merge (concat) all ids together with delimiter ("o") for later on separation
             let idConcat = listOfMergeShapeIds.join("o");
             idConcat = Math.ceil(Math.random() * 100000).toString();
 
@@ -478,4 +479,11 @@ class SketchPage extends Component {
     }
 }
 
-export default SketchPage;
+/// TODO: MIGRATE TO REACT HERE
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+    }
+}
+
+export default connect()(SketchPage);
